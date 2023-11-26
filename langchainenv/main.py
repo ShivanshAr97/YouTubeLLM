@@ -14,10 +14,12 @@ with st.sidebar:
             key="query"
             )
         st.form_submit_button(label='Submit', type="primary")
-        st.write("Takes 2-3s for 15 min video, 10-12s for a 1 hr video generally")
+        st.caption("Takes 5-7s for 15 min video and 15-20s for a 1 hr video generally")
+        st.caption("Upload english videos only")
 
 if query and youtube_url:
-    db = lch.create_db_from_youtube_video_url(youtube_url)
-    response, docs = lch.get_response_from_query(db, query)
+    with st.spinner("Processing..."):
+        db = lch.create_db_from_youtube_video_url(youtube_url)
+        response, docs = lch.get_response_from_query(db, query)
     st.subheader("Answer:")
     st.text(textwrap.fill(response, width=85))
